@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import questions from './question.json';
 
@@ -7,6 +7,7 @@ function App() {
   const [nameInput, setNameInput] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [gameQuestions, setGameQuestions] = useState([]);
   const [userAnswer, setUserAnswer] = useState("");
   const [result, setResult] = useState("");
   const [answered, setAnswered] = useState(false);
@@ -14,7 +15,12 @@ function App() {
   const [gameFinished, setGameFinished] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
-  const currentRiddle = questions[currentIndex];
+  useEffect(() => {
+    const shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+    setGameQuestions(shuffledQuestions.slice(0, 4));
+  }, []);
+
+  const currentRiddle = gameQuestions[currentIndex];
 
   const startGame = (e) => {
     e.preventDefault();
@@ -38,7 +44,7 @@ function App() {
 
 
   const nextQuestion = () => {
-    if (currentIndex === questions.length - 1) {
+    if (currentIndex === 3) { // 4 questions, so index 3 is last
       setGameFinished(true);
       return;
     }
@@ -57,6 +63,8 @@ function App() {
   };
 
   const restartGame = () => {
+    const shuffledQuestions = [...questions].sort(() => Math.random() - 0.5);
+    setGameQuestions(shuffledQuestions.slice(0, 4));
     setGameStarted(false);
     setPlayerName("");
     setNameInput("");
@@ -96,7 +104,7 @@ function App() {
         <header className="App-header">
           <h1>Game Over!</h1>
           <p>Well done, {playerName}!</p>
-          <p>Your score: {score} out of {questions.length}</p>
+          <p>Your score: {score} out of 4</p>
           <button onClick={restartGame} style={{ padding: '8px 16px', fontSize: '16px', marginTop: '16px' }}>Play Again</button>
         </header>
       </div>
