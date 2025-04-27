@@ -18,5 +18,56 @@
     "question": "What month of the year has 28 days?",
     "answer": "all months",
     "hint": "Think carefully—every month fits!"
+  },
+  {
+    "question": "What has a head and a tail but no body?",
+    "answer": "coin",
+    "hint": "You might flip me to make a choice."
+  },
+  {
+    "question": "What can you catch but not throw?",
+    "answer": "cold",
+    "hint": "You might sneeze if you get me."
+  },
+  {
+    "question": "What gets wetter as it dries?",
+    "answer": "towel",
+    "hint": "I help you after a shower, but soak up your troubles."
+  },
+  {
+    "question": "What has keys but can't open locks?",
+    "answer": "piano",
+    "hint": "You can play a tune, but not a trick."
+  },
+  {
+    "question": "What has hands but can't clap?",
+    "answer": "clock",
+    "hint": "I’m always on time, never on beat."
+  },
+  {
+    "question": "What has many teeth but can't bite?",
+    "answer": "comb",
+    "hint": "I run through your hair, not your food."
+  },
+  {
+    "question": "What can travel around the world while staying in a corner?",
+    "answer": "stamp",
+    "hint": "I stick to my job."
+  },
+  {
+    "question": "What belongs to you, but other people use it more than you do?",
+    "answer": "your name",
+    "hint": "It's called out, but rarely by yourself."
+  },
+  {
+    "question": "What has a neck but no head?",
+    "answer": "bottle",
+    "hint": "I can be corked, but never wear a hat."
+  },
+  {
+    "question": "What is full of holes but still holds water?",
+    "answer": "sponge",
+    "hint": "I’m porous but never thirsty."
   }
 ]
+
