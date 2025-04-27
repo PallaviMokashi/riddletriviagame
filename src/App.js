@@ -12,6 +12,7 @@ function App() {
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
+  const [showHint, setShowHint] = useState(false);
 
   const currentRiddle = questions[currentIndex];
 
@@ -29,10 +30,12 @@ function App() {
     if (userAnswer.trim().toLowerCase() === currentRiddle.answer) {
       setResult("Correct! 🎉");
       setScore((prev) => prev + 1);
+      setShowHint(false);
     } else {
       setResult("Incorrect. Try again!");
     }
   };
+
 
   const nextQuestion = () => {
     if (currentIndex === questions.length - 1) {
@@ -43,12 +46,14 @@ function App() {
     setUserAnswer("");
     setResult("");
     setAnswered(false);
+    setShowHint(false);
   };
 
   const tryAgain = () => {
     setUserAnswer("");
     setResult("");
     setAnswered(false);
+    setShowHint(true); // Show hint after first retry
   };
 
   const restartGame = () => {
@@ -61,7 +66,9 @@ function App() {
     setAnswered(false);
     setScore(0);
     setGameFinished(false);
+    setShowHint(false);
   };
+
 
   if (!gameStarted) {
     return (
@@ -102,7 +109,46 @@ function App() {
         <h1>Riddle Trivia Game</h1>
         <p>Player: {playerName}</p>
         <p>Question {currentIndex + 1} of {questions.length}</p>
-        <p>{currentRiddle.question}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <p style={{ margin: 0 }}>{currentRiddle.question}</p>
+        </div>
+        {/* Hint button and hint only if answer is wrong */}
+        {/* Show Hint button always, and show hint below when clicked */}
+        <div style={{ margin: '10px 0' }}>
+          {!showHint && (
+            <button
+              type="button"
+              style={{
+                background: '#eee',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '6px 16px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '15px',
+                marginLeft: '8px'
+              }}
+              onClick={() => setShowHint(true)}
+            >
+              Show Hint
+            </button>
+          )}
+          {showHint && (
+            <div style={{
+              marginTop: '8px',
+              background: '#333',
+              color: '#fff',
+              padding: '8px 14px',
+              borderRadius: '6px',
+              display: 'inline-block',
+              fontSize: '15px',
+              maxWidth: '300px',
+              whiteSpace: 'pre-line'
+            }}>
+              {currentRiddle.hint}
+            </div>
+          )}
+        </div>
         <form onSubmit={checkAnswer} style={{ margin: '20px 0' }}>
           <input
             type="text"
@@ -110,17 +156,19 @@ function App() {
             onChange={e => setUserAnswer(e.target.value)}
             placeholder="Your answer..."
             style={{ padding: '8px', fontSize: '16px' }}
-            disabled={answered}
+            disabled={answered && result && result.startsWith('Correct')}
           />
-          <button type="submit" style={{ marginLeft: '10px', padding: '8px 16px', fontSize: '16px' }} disabled={answered}>Submit</button>
+          <button type="submit" style={{ marginLeft: '10px', padding: '8px 16px', fontSize: '16px' }} disabled={answered && result && result.startsWith('Correct')}>Submit</button>
         </form>
         {result && <div style={{ fontWeight: 'bold', marginTop: '10px' }}>{result}</div>}
-        {answered && (
+        {(answered || showHint) && (
           <div style={{ marginTop: '16px' }}>
             <button onClick={tryAgain} style={{ padding: '8px 16px', fontSize: '16px', marginRight: '10px' }}>Try Again</button>
-            <button onClick={nextQuestion} style={{ padding: '8px 16px', fontSize: '16px' }}>
-              {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
-            </button>
+            {answered && (
+              <button onClick={nextQuestion} style={{ padding: '8px 16px', fontSize: '16px' }}>
+                {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
+              </button>
+            )}
           </div>
         )}
       </header>
