@@ -45,6 +45,12 @@ function App() {
     setAnswered(false);
   };
 
+  const tryAgain = () => {
+    setUserAnswer("");
+    setResult("");
+    setAnswered(false);
+  };
+
   const restartGame = () => {
     setGameStarted(false);
     setPlayerName("");
@@ -110,9 +116,12 @@ function App() {
         </form>
         {result && <div style={{ fontWeight: 'bold', marginTop: '10px' }}>{result}</div>}
         {answered && (
-          <button onClick={nextQuestion} style={{ marginTop: '16px', padding: '8px 16px', fontSize: '16px' }}>
-            {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
-          </button>
+          <div style={{ marginTop: '16px' }}>
+            <button onClick={tryAgain} style={{ padding: '8px 16px', fontSize: '16px', marginRight: '10px' }}>Try Again</button>
+            <button onClick={nextQuestion} style={{ padding: '8px 16px', fontSize: '16px' }}>
+              {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
+            </button>
+          </div>
         )}
       </header>
     </div>
